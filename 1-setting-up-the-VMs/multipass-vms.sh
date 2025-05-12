@@ -29,9 +29,5 @@ for vm in "${VMS[@]}"; do
   MEM=$2
   DISK=$3
   echo "Launching VM '$NAME'..."
-  if [ "$NAME" = "jumpbox" ]; then
-    multipass launch --name "$NAME" --memory "$MEM" --disk "$DISK" --cloud-init jumpbox.yaml
-  else
-    multipass launch --name "$NAME" --memory "$MEM" --disk "$DISK"
-  fi
+    multipass launch --name "$NAME" --memory "$MEM" --disk "$DISK" --cloud-init cloud-init.yaml
 done
