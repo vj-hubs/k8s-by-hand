@@ -4,34 +4,25 @@
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | Prerequisites Setup | [Kubernetes the Hard Way - Prerequisites](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/01-prerequisites.md) | Automate VM provisioning for the tutorial prerequisites step. |
 
-To start all VMs defined in this directory, first make the script executable:
+To start all VMs defined in this directory using Lima:
 
 ```bash
-chmod +x start-all-vms.sh
+chmod +x lima-vms.sh && ./lima-vms.sh
 ```
 
-Then run the script:
+## Alternative: Using Multipass
+
+If you are on Windows, or prefer Multipass, you can use the following script to launch the VMs:
 
 ```bash
-./start-all-vms.sh
-```
-
-## Alternative: Using Multipass (Windows/macOS/Linux)
-
-If you are on Windows, or prefer Multipass, you can use the following commands to launch the VMs:
-
-```bash
-multipass launch --name jumpbox --memory 512M --disk 10G
-multipass launch --name server --memory 2G --disk 20G
-multipass launch --name node0 --memory 2G --disk 20G
-multipass launch --name node1 --memory 2G --disk 20G
+chmod +x multipass-vms.sh && ./multipass-vms.sh
 ```
 
 - [Install Multipass](https://multipass.run/) if you don't have it already.
 - You can SSH into a VM with: `multipass shell <vm-name>`
 - For advanced provisioning, see the multipass documentation or add cloud-init configs as needed.
 
-## Accessing the VMs
+## Accessing the Lima VMs
 
 Once the VMs are set up and running, you can SSH into each VM using the following commands:
 **The password for all VMs is `root`**

@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: root
+    lock_passwd: false
+    passwd: $6$rounds=4096$Qw1k2j3l4m5n6o7p$w1Q2e3R4t5Y6u7I8o9P0a1S2d3F4g5H6j7K8l9Z0x1C2v3B4n5M6
+    shell: /bin/bash
+runcmd:
+  - sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+  - sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+  - sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/' /etc/ssh/sshd_config.d/60-cloudimg-settings.conf || true
+  - systemctl restart ssh

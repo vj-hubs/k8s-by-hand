@@ -9,7 +9,7 @@ OUTFILE="machines.txt"
 
 for vm in $VMS; do
   # Get the IP address
-  ip=$(limactl shell "$vm" -- ip -f inet addr show eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+  ip=$(limactl shell "$vm" -- hostname -I | awk '{print $1}')
 
   # Compose the line based on the VM name
   case "$vm" in
