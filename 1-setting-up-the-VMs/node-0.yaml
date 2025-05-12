@@ -19,10 +19,8 @@ provision:
   - mode: system
     script: |
       #!/bin/sh
-      # Enable root login and password authentication (if needed)
-      hostnamectl set-hostname node-0
+      echo 'root:root' | chpasswd
       sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
       sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
-      echo 'root:root' | chpasswd
       sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/' /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
       systemctl restart ssh

@@ -10,7 +10,10 @@ Generates the `machines.txt` file with the required VM information.
 **Usage:**
 ```sh
 chmod +x generate-machines.sh
+# Default: Lima
 ./generate-machines.sh
+# For Multipass:
+./generate-machines.sh --provider multipass
 ```
 
 ---
