@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Check if multipass is installed, otherwise install it
 if ! command -v multipass >/dev/null 2>&1; then
@@ -19,8 +20,8 @@ multipass purge
 VMS=(
   "jumpbox 512M 10G"
   "server 2G 20G"
-  "node0 2G 20G"
-  "node1 2G 20G"
+  "node-0 2G 20G"
+  "node-1 2G 20G"
 )
 
 for vm in "${VMS[@]}"; do
@@ -29,5 +30,5 @@ for vm in "${VMS[@]}"; do
   MEM=$2
   DISK=$3
   echo "Launching VM '$NAME'..."
-    multipass launch --name "$NAME" --memory "$MEM" --disk "$DISK" --cloud-init cloud-init.yaml
+    multipass launch --name "$NAME" --memory "$MEM" --disk "$DISK" --cloud-init "$SCRIPT_DIR/cloud-init.yaml"
 done
