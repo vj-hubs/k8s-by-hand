@@ -1,0 +1,28 @@
+images:
+- location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
+  arch: "aarch64"
+user: 
+  name: "server"
+  uid: 1000
+vmType: "vz"
+networks:
+   - lima: user-v2
+memory: "2GiB"
+disk: "20GiB"
+mounts:
+  - location: "~"
+    writable: true
+ssh:
+  loadDotSSHPubKeys: true
+  localPort: 2223
+provision:
+  - mode: system
+    script: |
+      #!/bin/sh
+      # Enable root login and password authentication (if needed)
+      hostnamectl set-hostname server
+      sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+      sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+      echo 'root:root' | chpasswd
+      sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/' /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+      systemctl restart ssh
