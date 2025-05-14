@@ -13,7 +13,7 @@ if ! command -v multipass >/dev/null 2>&1; then
 fi
 
 # Delete the existing VMs and purge
-multipass delete jumpbox server node-0 node-1
+multipass delete jumpbox server node-0 node-1 || true
 multipass purge
 
 # VM definitions: name memory disk
