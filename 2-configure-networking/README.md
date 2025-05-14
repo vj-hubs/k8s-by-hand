@@ -10,7 +10,10 @@ Generates the `machines.txt` file with the required VM information.
 **Usage:**
 ```sh
 chmod +x generate-machines.sh
+# Default: Lima
 ./generate-machines.sh
+# For Multipass:
+./generate-machines.sh --provider multipass
 ```
 
 ---
@@ -18,12 +21,25 @@ chmod +x generate-machines.sh
 ## 2. configure-hosts.sh
 Sets up SSH keys, hostnames, and hosts files across all VMs as described in `machines.txt`.
 
-**Usage:**
-```sh
-chmod +x configure-hosts.sh
-sudo ./configure-hosts.sh
-```
+### Transferring and Running `configure-hosts.sh` on the Jumpbox
 
----
+1. **Copy the script and SSH into the jumpbox:**
 
-Make sure both scripts are run from the `2-configure-networking` directory and that you have the necessary permissions. 
+   For Lima (default port-forwarded SSH):
+   ```sh
+   scp -P 2222 configure-hosts.sh root@127.0.0.1:/root/
+   ssh -p 2222 root@127.0.0.1
+   ```
+
+   For Multipass:
+   ```sh
+   jumpbox_ip=$(multipass exec jumpbox -- hostname -I | awk '{print $1}')
+   scp configure-hosts.sh root@$jumpbox_ip:/root/
+   ssh root@$jumpbox_ip
+   ```
+
+2. **On the jumpbox, run:**
+   ```sh
+   chmod +x configure-hosts.sh
+   sudo ./configure-hosts.sh
+   ```
